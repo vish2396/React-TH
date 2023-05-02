@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
 function App() {
+  const [users, setUsers] = useState([]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const newUser = { name, email };
+    setUsers([...users, newUser]);
+    setName("");
+    setEmail("");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Add Users</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </div>
+        <button type="submit">Add User</button>
+      </form>
+      <h2>Users:</h2>
+      <ul>
+        {users.map((user, index) => (
+          <li key={index}>
+            {user.name} ({user.email})
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
